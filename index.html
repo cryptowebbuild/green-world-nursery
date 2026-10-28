@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="bn" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>গ্রীন ওয়ার্ল্ড নার্সারি | উন্নত জাতের ফলদ, বনজ ও ছাদ বাগানের চারাগাছ | রাজশাহী</title>
+  <meta name="description" content="গ্রীন ওয়ার্ল্ড নার্সারি - উন্নত জাতের মিষ্টি ফলদ চারা, রঙিন সাগর কলা, আপেল, রেড লেডি পেঁপে, ডালিম ও হাইব্রিড সুপারি চারা। সারা দেশে হোম ডেলিভারি।">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            nursery: {
+              950: '#022c22',
+              900: '#064e3b',
+              800: '#065f46',
+              700: '#047857',
+              600: '#059669',
+              500: '#10b981',
+              400: '#34d399',
+              100: '#d1fae5',
+              50: '#ecfdf5'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            bengali: ['"Hind Siliguri"', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- React 18 & Babel CDN -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Hind Siliguri', 'Plus Jakarta Sans', sans-serif;
+      background-color: #022c22;
+      color: #ecfdf5;
+    }
+    .plant-shadow {
+      box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.25);
+    }
+  </style>
+</head>
+<body class="selection:bg-emerald-500 selection:text-white">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useMemo } = React;
+
+    const BRAND_PHONE = "01647-235281";
+    const ALT_PHONE = "01787-005981";
+    const WHATSAPP_NUM = "8801647235281";
+    const BRAND_EMAIL = "greenworldnursery5281@gmail.com";
+    const LOCATION = "বিরলদহ মাজার, পুঠিয়া, রাজশাহী, বাংলাদেশ";
+    const FB_LINK = "https://www.facebook.com/greenworldnurserybd/";
+
+    const PRODUCTS = [
+      {
+        id: 'gw-1',
+        title: 'উচ্চফলনশীল রঙিন সাগর কলার স্বাস্থ্যবান ফলন্ত চারা',
+        category: 'banana',
+        plantType: 'টিস্যু কালচার ও অরিজিনাল কন্দ চারা',
+        maturity: '৮ - ১০ মাসে ফলন শুরু',
+        price: 350,
+        originalPrice: 450,
+        tag: 'হট ফেভারিট',
+        image: 'images/plant_8.jpg',
+        description: 'অসাধারণ মিষ্টি ও আকর্ষণীয় লালচে-সোনালী খোসাযুক্ত রঙিন সাগর কলা। রোগমুক্ত, দ্রুত বর্ধনশীল এবং বাড়ির ছাদবাগান বা বাণিজ্যিক বাগানে বাম্পার ফলন দেয়।'
+      },
+      {
+        id: 'gw-2',
+        title: 'হাইব্রিড রেড লেডি পেঁপের উন্নত কলম চারাগাছ',
+        category: 'papaya',
+        plantType: '১০০% অরিজিনাল এফ-১ হাইব্রিড জাত',
+        maturity: '৬ - ৭ মাসে ফলবতী',
+        price: 280,
+        originalPrice: 380,
+        tag: 'বেস্টসেলার',
+        image: 'images/plant_10.jpg',
+        description: 'গাছের গোড়া থেকেই থোকায় থোকায় লালচে মিষ্টি পেঁপে ধরে। প্রতিটি পেঁপে ১.৫ - ২ কেজি পর্যন্ত হয়। ছাদবাগান বা টবে চাষের জন্য আদর্শ।'
+      },
+      {
+        id: 'gw-3',
+        title: 'বাংলাদেশ উপযোগী উন্নত জাতের মিষ্টি আপেল চারা',
+        category: 'exotic',
+        plantType: 'উন্নত গ্রাফটিং কলম চারা',
+        maturity: '১ - ১.৫ বছরে ফলন',
+        price: 650,
+        originalPrice: 850,
+        tag: 'দুর্লভ কালেকশন',
+        image: 'images/plant_9.jpg',
+        description: 'আমাদের দেশের আবহাওয়ায় সফলভাবে ফলন দেওয়া এইচআরএমএন-৯৯ ও আন্না জাতের মিষ্টি আপেলের শক্তিশালী মূলযুক্ত স্বাস্থ্যবান চারা।'
+      },
+      {
+        id: 'gw-4',
+        title: 'সুপার সুইট লাল ডালিম / বেদানার ফলন্ত কলম চারা',
+        category: 'pomegranate',
+        plantType: 'ভারী কাণ্ডযুক্ত কলম চারা',
+        maturity: 'ফলন্ত গাছে ফুলসহ সরবরাহ',
+        price: 550,
+        originalPrice: 700,
+        tag: 'মিষ্টি জাত',
+        image: 'images/plant_12.jpg',
+        description: 'পাতলা খোসা ও গাঢ় লাল দানাবিশিষ্ট থাই সুপার ভাগওয়া জাতের ডালিম চারা। টবে বা ড্রামে খুব সহজেই প্রচুর ডালিম ধরে।'
+      },
+      {
+        id: 'gw-5',
+        title: '১২ মাসি হাইব্রিড সাগর কলার মূল কন্দ (৫ পিস প্যাক)',
+        category: 'banana',
+        plantType: 'প্রাকৃতিকভাবে শোধিত কন্দ',
+        maturity: 'রোপণের জন্য প্রস্তুত',
+        price: 950,
+        originalPrice: 1250,
+        tag: 'বাণিজ্যিক কম্বো',
+        image: 'images/plant_6.jpg',
+        description: 'সরাসরি রাজশাহী পুঠিয়ার নিজস্ব মাদার বাগান থেকে সংগৃহীত রোগমুক্ত সুপুষ্ট কলার কন্দ। ১০০% বেঁচে থাকার নিশ্চয়তা।'
+      },
+      {
+        id: 'gw-6',
+        title: 'গ্রীন ওয়ার্ল্ড স্পেশাল বিদেশি ফলের কলম চারা কম্বো',
+        category: 'exotic',
+        plantType: 'থাই লংগান + ড্রাগন + ভিয়েতনামি নারিকেল',
+        maturity: 'সার্টিফাইড মাদার প্ল্যান্ট চারা',
+        price: 1850,
+        originalPrice: 2400,
+        tag: 'ছাদবাগান স্পেশাল',
+        image: 'images/plant_11.jpg',
+        description: 'যেকোনো ছাদবাগানের জন্য উপযুক্ত ৩টি বিদেশি এক্সোটিক ফলের চারা। সাথে ফ্রি জৈব সার ও রোপণ নির্দেশিকা।'
+      }
+    ];
+
+    function App() {
+      const [selectedCategory, setSelectedCategory] = useState('all');
+      const [orderModalProduct, setOrderModalProduct] = useState(null);
+      
+      const [customerName, setCustomerName] = useState('');
+      const [customerPhone, setCustomerPhone] = useState('');
+      const [customerAddress, setCustomerAddress] = useState('');
+      const [selectedDistrict, setSelectedDistrict] = useState('rajshahi');
+      const [quantity, setQuantity] = useState(1);
+
+      const filteredProducts = useMemo(() => {
+        if (selectedCategory === 'all') return PRODUCTS;
+        return PRODUCTS.filter(p => p.category === selectedCategory);
+      }, [selectedCategory]);
+
+      const deliveryCharge = selectedDistrict === 'rajshahi' ? 100 : 150;
+      const subtotal = orderModalProduct ? orderModalProduct.price * quantity : 0;
+      const totalAmount = subtotal + deliveryCharge;
+
+      const handleConfirmWhatsApp = (e) => {
+        e.preventDefault();
+        if (!orderModalProduct) return;
+
+        const message = `*🌿 গ্রীন ওয়ার্ল্ড নার্সারি — চারাগাছ অর্ডার মেমো*
+━━━━━━━━━━━━━━━━━━
+🌱 *চারাগাছের নাম:* ${orderModalProduct.title}
+📦 *জাত ও ধরন:* ${orderModalProduct.plantType}
+🔢 *পরিমাণ:* ${quantity} টি চারা
+💰 *মূল্য:* ৳${orderModalProduct.price} x ${quantity} = ৳${subtotal}
+🚚 *ডেলিভারি এলাকা:* ${selectedDistrict === 'rajshahi' ? 'রাজশাহী জেলা (৳১০০)' : 'সারাদেশে কুরিয়ার (৳১৫০)'}
+💵 *সর্বমোট প্রদেয়:* ৳${totalAmount} (ক্যাশ অন ডেলিভারি)
+
+👤 *কাস্টমারের তথ্য:*
+• *নাম:* ${customerName}
+• *মোবাইল:* ${customerPhone}
+• *ঠিকানা:* ${customerAddress}
+
+_আমি এই চারাগাছটি কনফার্ম করতে চাই। অনুগ্রহ করে ডেলিভারির তারিখ জানিয়ে দিন।_`;
+
+        const waUrl = `https://wa.me/${WHATSAPP_NUM}?text=${encodeURIComponent(message)}`;
+        window.open(waUrl, '_blank');
+      };
+
+      return (
+        <div className="min-h-screen flex flex-col justify-between">
+          
+          {/* Top Demo Banner */}
+          <div className="bg-gradient-to-r from-emerald-950 via-nursery-900 to-emerald-950 text-emerald-300 text-xs py-2 px-4 border-b border-emerald-500/20 text-center font-medium">
+            <span className="inline-flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+              <strong>গ্রীন ওয়ার্ল্ড নার্সারি</strong> — অফিসিয়াল ডিজিটাল শোরুম ডেমো | Powered by <a href="https://cryptowebbuild.com" target="_blank" className="underline hover:text-white font-bold ml-1">CryptoWebBuild</a>
+            </span>
+          </div>
+
+          {/* Header */}
+          <header className="sticky top-0 z-40 bg-nursery-950/90 backdrop-blur-md border-b border-emerald-500/20">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
+              
+              {/* Logo / Brand Name */}
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-xl shadow-inner">
+                  🌱
+                </div>
+                <div>
+                  <h1 className="text-lg sm:text-xl font-extrabold text-white tracking-wide">
+                    গ্রীন ওয়ার্ল্ড নার্সারি
+                  </h1>
+                  <p className="text-[10px] sm:text-xs text-emerald-400 font-medium">
+                    ৪.৩K+ ফলোয়ার্স • বিরলদহ মাজার, পুঠিয়া, রাজশাহী
+                  </p>
+                </div>
+              </div>
+
+              {/* Call & WhatsApp CTAs */}
+              <div className="flex items-center gap-2.5">
+                <a 
+                  href={'tel:' + BRAND_PHONE}
+                  className="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-emerald-900/60 hover:bg-emerald-800 text-emerald-300 border border-emerald-500/30 text-xs font-bold transition"
+                >
+                  <span>📞 {BRAND_PHONE}</span>
+                </a>
+
+                <a 
+                  href={'https://wa.me/' + WHATSAPP_NUM}
+                  target="_blank"
+                  rel="noopener"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-lg shadow-emerald-950/50 transition transform hover:-translate-y-0.5"
+                >
+                  <span className="text-sm">💬</span>
+                  <span>হোয়াটসঅ্যাপে অর্ডার</span>
+                </a>
+              </div>
+
+            </div>
+          </header>
+
+          {/* Hero Section */}
+          <section className="relative overflow-hidden pt-10 pb-16 md:pt-16 md:pb-20 bg-gradient-to-b from-nursery-950 via-nursery-900 to-nursery-950 border-b border-emerald-500/20">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                {/* Left Text */}
+                <div className="lg:col-span-7 space-y-5 text-center lg:text-left">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-900/60 border border-emerald-400/30 text-emerald-300 text-xs font-semibold">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>সরাসরি মাদার বাগান থেকে ১০০% খাঁটি কলম চারা</span>
+                  </div>
+
+                  <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight">
+                    বাগান সাজান সেরা জাতের <br />
+                    <span className="text-emerald-400">উচ্চফলনশীল ফলদ চারায়</span>
+                  </h2>
+
+                  <p className="text-emerald-100/90 text-sm sm:text-base leading-relaxed max-w-2xl">
+                    রঙিন সাগর কলা, রেড লেডি পেঁপে, দেশি-বিদেশি মিষ্টি আম, ড্রাগন, আপেল ও হাইব্রিড সুপারির শতভাগ খাঁটি ও রোগমুক্ত চারা। সারা দেশে নিরাপদ প্যাকিংয়ে ক্যাশ অন ডেলিভারিতে চারা পৌঁছে দিচ্ছি।
+                  </p>
+
+                  {/* 4 Trust Pillars */}
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+                    <div className="p-3 rounded-xl bg-nursery-900/80 border border-emerald-500/20 text-center">
+                      <div className="text-xl mb-1">🌿</div>
+                      <h4 className="text-xs font-bold text-emerald-300">১০০% কলম জাত</h4>
+                      <p className="text-[10px] text-emerald-200/70">দ্রুত ফলনের নিশ্চয়তা</p>
+                    </div>
+                    <div className="p-3 rounded-xl bg-nursery-900/80 border border-emerald-500/20 text-center">
+                      <div className="text-xl mb-1">📦</div>
+                      <h4 className="text-xs font-bold text-emerald-300">নিরাপদ প্যাকিং</h4>
+                      <p className="text-[10px] text-emerald-200/70">গাছ ভাঙার ঝুঁকি নেই</p>
+                    </div>
+                    <div className="p-3 rounded-xl bg-nursery-900/80 border border-emerald-500/20 text-center">
+                      <div className="text-xl mb-1">🚚</div>
+                      <h4 className="text-xs font-bold text-emerald-300">সারা দেশে ডেলিভারি</h4>
+                      <p className="text-[10px] text-emerald-200/70">কুরিয়ারে দ্রুত পৌঁছায়</p>
+                    </div>
+                    <div className="p-3 rounded-xl bg-nursery-900/80 border border-emerald-500/20 text-center">
+                      <div className="text-xl mb-1">💵</div>
+                      <h4 className="text-xs font-bold text-emerald-300">ক্যাশ অন ডেলিভারি</h4>
+                      <p className="text-[10px] text-emerald-200/70">গাছ দেখে মূল্য পরিশোধ</p>
+                    </div>
+                  </div>
+
+                  {/* CTAs */}
+                  <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 pt-3">
+                    <a 
+                      href="#catalog"
+                      className="w-full sm:w-auto px-7 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-stone-950 font-extrabold text-sm shadow-xl shadow-emerald-500/20 text-center transition"
+                    >
+                      চারাগাছের কালেকশন দেখুন
+                    </a>
+                    <a 
+                      href={'https://wa.me/' + WHATSAPP_NUM}
+                      target="_blank"
+                      rel="noopener"
+                      className="w-full sm:w-auto px-6 py-3 rounded-xl bg-nursery-900 hover:bg-nursery-800 border border-emerald-400/30 text-emerald-300 text-sm font-bold text-center transition flex items-center justify-center gap-2"
+                    >
+                      <span>💬 যেকোনো চারার স্টক জানতে ইনবক্স</span>
+                    </a>
+                  </div>
+                </div>
+
+                {/* Right Banner Card */}
+                <div className="lg:col-span-5 relative">
+                  <div className="relative rounded-2xl overflow-hidden border-2 border-emerald-500/40 plant-shadow bg-nursery-900 group">
+                    <img 
+                      src="images/plant_2.jpg" 
+                      alt="গ্রীন ওয়ার্ল্ড নার্সারি অফিসিয়াল ব্যানার" 
+                      className="w-full h-72 sm:h-84 object-cover transition duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-nursery-950 via-transparent to-black/20"></div>
+
+                    <div className="absolute top-3 right-3 bg-emerald-500 text-stone-950 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                      সার্টিফাইড নার্সারি
+                    </div>
+
+                    <div className="absolute bottom-3 left-3 right-3 p-3.5 rounded-xl bg-nursery-950/90 backdrop-blur-md border border-emerald-500/30">
+                      <div className="flex justify-between items-end">
+                        <div>
+                          <p className="text-emerald-400 text-xs font-bold">পুঠিয়া, রাজশাহী</p>
+                          <h4 className="text-white text-sm font-bold">গ্রীন ওয়ার্ল্ড নার্সারি ও গার্ডেন</h4>
+                          <p className="text-[11px] text-emerald-200">হটলাইন: 01647-235281</p>
+                        </div>
+                        <a 
+                          href="#catalog"
+                          className="px-3 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-stone-950 text-xs font-bold transition"
+                        >
+                          অর্ডার করুন
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          {/* Product Catalog Section */}
+          <main id="catalog" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+            
+            <div className="text-center space-y-2 mb-10">
+              <span className="text-xs uppercase tracking-widest text-emerald-400 font-bold">আমাদের বিশেষ নার্সারি স্টক</span>
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
+                জনপ্রিয় ফলদ ও ছাদ বাগানের চারাগাছ
+              </h3>
+              <p className="text-xs sm:text-sm text-emerald-200/80 max-w-xl mx-auto">
+                পছন্দের চারাগাছটি সিলেক্ট করে সরাসরি ১-ক্লিকে হোয়াটসঅ্যাপে ক্যাশ অন ডেলিভারিতে অর্ডার কনফার্ম করুন।
+              </p>
+            </div>
+
+            {/* Category Filter Tabs */}
+            <div className="flex flex-wrap justify-center gap-2 mb-8">
+              {[
+                { id: 'all', label: 'সব জাতের চারা' },
+                { id: 'banana', label: '🍌 রঙিন সাগর কলা ও সুপারি' },
+                { id: 'papaya', label: '🍈 রেড লেডি পেঁপে' },
+                { id: 'pomegranate', label: '🍎 মিষ্টি ডালিম ও আপেল' },
+                { id: 'exotic', label: '🥭 বিদেশি এক্সোটিক কম্বো' }
+              ].map(cat => (
+                <button
+                  key={cat.id}
+                  onClick={() => setSelectedCategory(cat.id)}
+                  className={'px-4 py-2 rounded-xl text-xs font-bold transition ' + (
+                    selectedCategory === cat.id
+                      ? 'bg-emerald-500 text-stone-950 shadow-lg shadow-emerald-500/20'
+                      : 'bg-nursery-900/90 text-emerald-200 hover:bg-nursery-800 border border-emerald-900'
+                  )}
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Product Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredProducts.map(product => (
+                <div 
+                  key={product.id}
+                  className="rounded-2xl bg-nursery-900/80 border border-emerald-500/20 overflow-hidden flex flex-col justify-between hover:border-emerald-400/50 transition duration-300 group plant-shadow"
+                >
+                  <div>
+                    {/* Image & Tag */}
+                    <div className="relative h-64 overflow-hidden bg-stone-950">
+                      <img 
+                        src={product.image} 
+                        alt={product.title} 
+                        className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute top-3 left-3 bg-emerald-500 text-stone-950 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                        {product.tag}
+                      </div>
+                      <div className="absolute top-3 right-3 bg-nursery-950/80 backdrop-blur-md border border-emerald-500/30 text-emerald-300 text-[10px] font-semibold px-2.5 py-0.5 rounded-full">
+                        ⏱️ {product.maturity}
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-5 space-y-2.5">
+                      <div className="flex items-center gap-2 text-[11px] text-emerald-400 font-semibold">
+                        <span>🌱 {product.plantType}</span>
+                      </div>
+
+                      <h4 className="text-base font-bold text-white leading-snug group-hover:text-emerald-300 transition">
+                        {product.title}
+                      </h4>
+
+                      <p className="text-xs text-emerald-100/70 leading-relaxed">
+                        {product.description}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Price & Booking Button */}
+                  <div className="p-5 pt-0">
+                    <div className="flex items-baseline justify-between mb-3">
+                      <div>
+                        <span className="text-xs text-emerald-300/50 line-through">৳{product.originalPrice}</span>
+                        <div className="text-xl font-extrabold text-emerald-400">
+                          ৳{product.price} <span className="text-xs font-normal text-emerald-200">/প্রতি চারা</span>
+                        </div>
+                      </div>
+                      <span className="text-[11px] text-emerald-400 font-semibold bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded">
+                        ক্যাশ অন ডেলিভারি
+                      </span>
+                    </div>
+
+                    <button
+                      onClick={() => setOrderModalProduct(product)}
+                      className="w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 via-emerald-600 to-emerald-700 hover:from-emerald-600 hover:to-emerald-800 text-stone-950 font-bold text-xs shadow-md transition flex items-center justify-center gap-2"
+                    >
+                      <span>১-ক্লিকে WhatsApp অর্ডার</span>
+                      <span>➔</span>
+                    </button>
+                  </div>
+
+                </div>
+              ))}
+            </div>
+
+          </main>
+
+          {/* Location & Nursery Info */}
+          <section className="bg-nursery-900/60 border-t border-b border-emerald-500/20 py-10">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="bg-nursery-950/80 rounded-2xl border border-emerald-500/30 p-6 md:p-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center text-center md:text-left">
+                  
+                  <div>
+                    <span className="text-xs uppercase tracking-widest text-emerald-400 font-bold">১০০% জাতের সত্যতা</span>
+                    <h4 className="text-xl font-bold text-white mt-1">গ্রীন ওয়ার্ল্ড নার্সারি গ্যারান্টি</h4>
+                    <p className="text-xs text-emerald-200/80 mt-1 leading-relaxed">
+                      আমরা কোনো সাধারণ বীজের চারা বিক্রি করি না। প্রতিটি চারা পরীক্ষিত ও ফলন্ত মাদার গাছ থেকে গ্রাফটিং/কলম করা।
+                    </p>
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-nursery-900/60 border border-emerald-800 text-left space-y-1.5">
+                    <p className="text-xs text-emerald-400 font-bold">📍 নার্সারির ঠিকানা:</p>
+                    <p className="text-xs text-white">{LOCATION}</p>
+                    <p className="text-[11px] text-emerald-300/80">সরাসরি নার্সারিতে এসেও চারা দেখে নেওয়া যাবে।</p>
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-nursery-900/60 border border-emerald-800 text-left space-y-1.5">
+                    <p className="text-xs text-emerald-400 font-bold">📞 হটলাইন ও পরামর্শ:</p>
+                    <p className="text-sm font-extrabold text-white">{BRAND_PHONE}</p>
+                    <p className="text-xs text-emerald-300">{ALT_PHONE}</p>
+                    <p className="text-[11px] text-emerald-200/60">গাছ রোপণ ও রোগবালাই দমনে ফ্রি পরামর্শ দেওয়া হয়।</p>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Footer */}
+          <footer className="bg-nursery-950 border-t border-emerald-900 py-8 text-center text-xs text-emerald-300/60 space-y-2">
+            <p className="text-white font-bold">গ্রীন ওয়ার্ল্ড নার্সারি • পুঠিয়া, রাজশাহী</p>
+            <p>অর্ডার ও কুরিয়ার তথ্য: {BRAND_PHONE} | {BRAND_EMAIL}</p>
+            <div className="pt-2 text-[11px] text-emerald-400/80">
+              ডিজিটাল শোরুম পার্টনার: <a href="https://cryptowebbuild.com" target="_blank" className="underline font-bold text-emerald-300 hover:text-white">CryptoWebBuild</a>
+            </div>
+          </footer>
+
+          {/* Order Modal Drawer */}
+          {orderModalProduct && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
+              <div className="relative w-full max-w-lg bg-nursery-950 border-2 border-emerald-500/40 rounded-2xl p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+                
+                {/* Close Button */}
+                <button 
+                  onClick={() => setOrderModalProduct(null)}
+                  className="absolute top-4 right-4 text-emerald-300 hover:text-white bg-nursery-900 p-2 rounded-full border border-emerald-700"
+                >
+                  ✕
+                </button>
+
+                {/* Modal Header */}
+                <div className="border-b border-emerald-500/20 pb-4 flex gap-3.5 items-center">
+                  <img 
+                    src={orderModalProduct.image} 
+                    alt={orderModalProduct.title} 
+                    className="w-16 h-16 rounded-xl object-cover border border-emerald-500/30 flex-shrink-0"
+                  />
+                  <div>
+                    <span className="text-[11px] font-bold text-emerald-400 uppercase tracking-wider">অর্ডার বুকিং ড্রয়ার</span>
+                    <h4 className="text-sm font-bold text-white mt-0.5 leading-snug">
+                      {orderModalProduct.title}
+                    </h4>
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="text-base font-extrabold text-emerald-400">
+                        ৳{orderModalProduct.price}
+                      </span>
+                      <span className="text-xs text-emerald-300/50 line-through">
+                        ৳{orderModalProduct.originalPrice}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Booking Form */}
+                <form onSubmit={handleConfirmWhatsApp} className="space-y-4 text-xs">
+                  
+                  {/* Quantity selector */}
+                  <div>
+                    <label className="block text-emerald-200 font-semibold mb-1">
+                      চারার সংখ্যা (পরিমাণ):
+                    </label>
+                    <div className="flex items-center gap-3">
+                      <button 
+                        type="button" 
+                        onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                        className="w-9 h-9 rounded-lg bg-nursery-900 border border-emerald-700 text-white font-bold text-lg flex items-center justify-center"
+                      >
+                        -
+                      </button>
+                      <span className="text-base font-extrabold text-white px-3">{quantity} টি চারা</span>
+                      <button 
+                        type="button" 
+                        onClick={() => setQuantity(quantity + 1)}
+                        className="w-9 h-9 rounded-lg bg-nursery-900 border border-emerald-700 text-white font-bold text-lg flex items-center justify-center"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Customer Name */}
+                  <div>
+                    <label className="block text-emerald-200 font-semibold mb-1">
+                      আপনার নাম <span className="text-red-400">*</span>
+                    </label>
+                    <input 
+                      type="text" 
+                      required
+                      placeholder="যেমন: মোঃ কামরুল ইসলাম"
+                      value={customerName}
+                      onChange={e => setCustomerName(e.target.value)}
+                      className="w-full bg-nursery-900 border border-emerald-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-emerald-400"
+                    />
+                  </div>
+
+                  {/* Customer Phone */}
+                  <div>
+                    <label className="block text-emerald-200 font-semibold mb-1">
+                      মোবাইল নম্বর <span className="text-red-400">*</span>
+                    </label>
+                    <input 
+                      type="tel" 
+                      required
+                      placeholder="যেমন: 017xxxxxxxx"
+                      value={customerPhone}
+                      onChange={e => setCustomerPhone(e.target.value)}
+                      className="w-full bg-nursery-900 border border-emerald-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-emerald-400"
+                    />
+                  </div>
+
+                  {/* Delivery Area */}
+                  <div>
+                    <label className="block text-emerald-200 font-semibold mb-1">
+                      ডেলিভারি এরিয়া সিলেক্ট করুন:
+                    </label>
+                    <div className="grid grid-cols-2 gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setSelectedDistrict('rajshahi')}
+                        className={'p-2.5 rounded-lg border font-semibold text-center ' + (
+                          selectedDistrict === 'rajshahi'
+                            ? 'bg-emerald-900/80 border-emerald-400 text-emerald-200'
+                            : 'bg-nursery-900 border-emerald-900 text-emerald-400/60'
+                        )}
+                      >
+                        রাজশাহী জেলা (৳১০০)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setSelectedDistrict('outside')}
+                        className={'p-2.5 rounded-lg border font-semibold text-center ' + (
+                          selectedDistrict === 'outside'
+                            ? 'bg-emerald-900/80 border-emerald-400 text-emerald-200'
+                            : 'bg-nursery-900 border-emerald-900 text-emerald-400/60'
+                        )}
+                      >
+                        সারা বাংলাদেশ কুরিয়ার (৳১৫০)
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Full Address */}
+                  <div>
+                    <label className="block text-emerald-200 font-semibold mb-1">
+                      পূর্ণাঙ্গ ঠিকানা (গ্রাম/উপজেলা/জেলা) <span className="text-red-400">*</span>
+                    </label>
+                    <textarea 
+                      required
+                      rows="2"
+                      placeholder="গ্রাম, ইউনিয়ন, থানা ও জেলার নাম..."
+                      value={customerAddress}
+                      onChange={e => setCustomerAddress(e.target.value)}
+                      className="w-full bg-nursery-900 border border-emerald-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-emerald-400"
+                    ></textarea>
+                  </div>
+
+                  {/* Price Calculation Summary */}
+                  <div className="bg-nursery-900/90 rounded-xl p-3 border border-emerald-800 space-y-1.5">
+                    <div className="flex justify-between text-emerald-200">
+                      <span>চারাগাছের মূল্য ({quantity} টি):</span>
+                      <span className="font-bold">৳{subtotal}</span>
+                    </div>
+                    <div className="flex justify-between text-emerald-200">
+                      <span>কুরিয়ার ও প্যাকিং চার্জ:</span>
+                      <span className="font-bold">৳{deliveryCharge}</span>
+                    </div>
+                    <div className="border-t border-emerald-800 pt-1.5 flex justify-between text-sm font-extrabold text-emerald-400">
+                      <span>সর্বমোট প্রদেয়:</span>
+                      <span>৳{totalAmount}</span>
+                    </div>
+                  </div>
+
+                  {/* Submit Button */}
+                  <button 
+                    type="submit"
+                    className="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-stone-950 font-extrabold text-sm shadow-xl transition flex items-center justify-center gap-2"
+                  >
+                    <span>💬 হোয়াটসঅ্যাপে অর্ডার কনফার্ম করুন</span>
+                  </button>
+
+                  <p className="text-[10px] text-center text-emerald-300/70">
+                    🔒 ক্যাশ অন ডেলিভারি — চারা হাতে পেয়ে মূল্য পরিশোধ করার সুযোগ।
+                  </p>
+
+                </form>
+
+              </div>
+            </div>
+          )}
+
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
